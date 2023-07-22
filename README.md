@@ -7,3 +7,5 @@ To start and use this application:
 2. Run `python app.py` to run application itself. Enjoy!
 
 To access application, using curl or open in browser localhost:3000/greetings
+
+NOTE: In order for this service to run, it required running redis instance wich is acessible on port 6379. 
