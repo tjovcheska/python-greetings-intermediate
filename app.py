@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask
 import redis
 
 app = Flask(__name__)
@@ -10,14 +10,14 @@ def get_greetings_from_redis():
         return cached_greeting
     else:
         # If the greeting is not cached in Redis, fetch it and cache it
-        greeting = {"greeting": "Hello from Python App!"}
-        redis_client.set('latest_greeting', greeting["greeting"])
-        return greeting["greeting"]
+        greeting = "Welcome to CI/CD + Docker Course!"
+        redis_client.set('latest_greeting', greeting)
+        return greeting
 
 @app.route('/greetings')
 def greetings():
     greeting = get_greetings_from_redis()
-    return jsonify({"greeting": greeting})
+    return greeting
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", debug=True, port=3000)
