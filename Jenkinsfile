@@ -31,11 +31,20 @@ pipeline {
             }
         }
         stage('test-dev') {
-            steps {
-                // script {
-                //     test("DEV")
-                // }
-                echo ''
+            parallel {
+                stage('Tests for new Greetings Suite'){
+                    script {
+                        // test("DEV")
+                        echo 'New test'
+                    }
+                }
+                                                
+                stage('Tests for old Greetings Suite'){
+                    script {
+                        test("DEV")
+                        echo 'Old test'
+                    }
+                }
             }
         }
         stage('approval'){
