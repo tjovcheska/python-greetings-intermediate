@@ -33,16 +33,20 @@ pipeline {
         stage('test-dev') {
             parallel {
                 stage('Tests for new Greetings Suite'){
-                    script {
-                        // test("DEV")
-                        echo 'New test'
+                    steps {
+                        script {
+                            // test("DEV")
+                            echo 'New test'
+                        }
                     }
                 }
                                                 
                 stage('Tests for old Greetings Suite'){
-                    script {
-                        test("DEV")
-                        echo 'Old test'
+                    steps {
+                        script {
+                            test("DEV")
+                            echo 'Old test'
+                        }
                     }
                 }
             }
