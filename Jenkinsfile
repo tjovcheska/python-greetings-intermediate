@@ -77,6 +77,7 @@ def test(String test_environment) {
     echo "Testing of python-greetings-app on ${test_environment} is starting..."
     sh "docker run --network=host -t -d --name api_tests_runner_${test_environment} teodorajovcheska7/api-tests-runner:latest"
     try {
+        sh "docker exec api_tests_runner_${test_environment} ls"
         sh "docker exec api_tests_runner_${test_environment} cucumber PLATFORM=${test_environment} --format html --out test-output/report.html"
     }
     finally {
