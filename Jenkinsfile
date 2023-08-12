@@ -3,6 +3,10 @@ pipeline {
     triggers {
         pollSCM('*/1 * * * *')
     }
+    environment {
+        DOCKER_USERNAME = credentials('docker-username')
+        DOCKER_PASSWORD = credentials('docker-password')
+    }
     stages {
         stage('build-app') {
             steps {
