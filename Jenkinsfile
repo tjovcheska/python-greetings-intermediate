@@ -6,8 +6,10 @@ pipeline {
     stages {
         stage('build-app') {
             steps {
-                echo "Build python-greetings-app"
-                build("teodorajovcheska7/python-greetings-app:latest" , "Dockerfile")
+                script {
+                    echo "Build python-greetings-app"
+                    build("teodorajovcheska7/python-greetings-app:latest" , "Dockerfile")
+                }
             }
         }
         stage('deploy-dev') {
