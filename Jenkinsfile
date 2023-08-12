@@ -10,12 +10,11 @@ pipeline {
     stages {
         stage('build-app') {
             steps {
-                // script {
-                //     echo "Build ${GIT_COMMIT}"
-                //     echo "Build python-greetings-app"
-                //     build("teodorajovcheska7/python-greetings-app:${GIT_COMMIT}" , "Dockerfile")
-                // }
-                echo 'Buils'
+                script {
+                    echo "Build ${GIT_COMMIT}"
+                    echo "Build python-greetings-app"
+                    build("teodorajovcheska7/python-greetings-app:${GIT_COMMIT}" , "Dockerfile")
+                }
             }
         }
         stage('deploy-dev') {
@@ -71,12 +70,12 @@ pipeline {
     }
 }
 
-// def build(String type, String dockerfile) {
-//     echo "Building ${tag} image based on ${dockerfile}"
-//     sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-//     sh "docker build --no-cache -t ${tag} . -f ${dockerfile}"
-//     sh "docker push ${tag}"
-// }
+def build(String type, String dockerfile) {
+    echo "Building ${tag} image based on ${dockerfile}"
+    sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+    sh "docker build --no-cache -t ${tag} . -f ${dockerfile}"
+    sh "docker push ${tag}"
+}
 
 // def test(String test_environment) {
 //     echo "Testing of python-greetings-app on ${test_environment} is starting..."
