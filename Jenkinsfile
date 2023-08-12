@@ -7,16 +7,21 @@ pipeline {
         stage('build-app') {
             steps {
                 echo "Build python-greetings-app"
+                build("teodorajovcheska7/python-greetings-app:latest" , "Dockerfile")
             }
         }
         stage('deploy-dev') {
             steps {
-                echo "Deploying python-greetings-app to DEV"
+                script {
+                    deploy("DEV")
+                }
             }
         }
         stage('test-dev') {
             steps {
-                echo "Testing python-greetings-app on DEV"
+                script {
+                    test("DEV")
+                }
             }
         }
         stage('approval') {
@@ -27,13 +32,51 @@ pipeline {
 
         stage('deploy-prod') {
             steps {
-                echo "Deploying python-greetings-app to PROD"
+                script {
+                    deploy("PROD")
+                }
             }
         }
         stage('test-prod') {
             steps {
-                echo "Testing python-greetings-app on PROD"
+                script {
+                    test("PROD")
+                }
             }
         }
     }
+    post {
+        failure {
+            script {
+                echo "Pipeline failure... Sending notification"
+                //invoce discord plugin
+            }
+        }
+        cleanup {
+            echo "Cleanup procedure..."
+            //potentually some docker clean up here as well
+        }
+    }
+}
+
+def build(String type, String dockerfile) {
+    echo "Building ${tag} image based on ${dockerfile}"
+    sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+    sh "docker build --no-cache -t ${tag} . -f ${dockerfile}"
+    sh "docker push ${tag}"
+}
+
+def test(String environment) {
+    echo "Testing of python-greetings-app on ${environment} is starting..."
+    //docker run...
+    //docker exec
+    //docker cp
+    //extract report logic
+    //docker cleanup
+
+}
+
+def deploy(String environment) {
+    echo "Deployment of python-greetings-app on ${environment} is starting..."
+    //kubectl set image...
 }
