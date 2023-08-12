@@ -84,5 +84,5 @@ def test(String environment) {
 
 def deploy(String environment) {
     echo "Deployment of python-greetings-app on ${environment} is starting..."
-    //kubectl set image...
+    sh "kubectl set image deployment python-greetings-${environment} python-greetings-${environment}-pod=teodorajovcheska7/python-greetings-app:latest"
 }
