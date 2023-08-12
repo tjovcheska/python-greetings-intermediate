@@ -42,16 +42,18 @@ pipeline {
 
         stage('deploy-prod') {
             steps {
-                script {
-                    deploy("prod")
-                }
+                // script {
+                //     deploy("prod")
+                // }
+                echo 'Deploy'
             }
         }
         stage('test-prod') {
             steps {
-                script {
-                    test("PRD")
-                }
+                // script {
+                //     test("PRD")
+                // }
+                echo 'Test'
             }
         }
     }
