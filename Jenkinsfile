@@ -11,8 +11,9 @@ pipeline {
         stage('build-app') {
             steps {
                 script {
+                    echo "Build ${GIT_COMMIT}"
                     echo "Build python-greetings-app"
-                    build("teodorajovcheska7/python-greetings-app:latest" , "Dockerfile")
+                    build("teodorajovcheska7/python-greetings-app:${GIT_COMMIT}" , "Dockerfile")
                 }
             }
         }
