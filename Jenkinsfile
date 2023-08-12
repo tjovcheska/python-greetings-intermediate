@@ -13,26 +13,28 @@ pipeline {
     stages {
         stage('build-app') {
             steps {
-                script {
-                    echo "Build ${GIT_COMMIT}"
-                    echo "Build python-greetings-app"
-                    build("teodorajovcheska7/python-greetings-app:${GIT_COMMIT}" , "Dockerfile")
-                }
+                // script {
+                //     echo "Build ${GIT_COMMIT}"
+                //     echo "Build python-greetings-app"
+                //     build("teodorajovcheska7/python-greetings-app:${GIT_COMMIT}" , "Dockerfile")
+                // }
+                echo ''
             }
         }
         stage('deploy-dev') {
             steps {
-                script {
-                    deploy("dev")
-                }
+                // script {
+                //     deploy("dev")
+                // }
+                echo ''
             }
         }
         stage('test-dev') {
             steps {
-                script {
-                    test("DEV")
-                }
-                echo 'Test'
+                // script {
+                //     test("DEV")
+                // }
+                echo ''
             }
         }
         stage('approval'){
@@ -52,10 +54,10 @@ pipeline {
                 expression { params.DEPLOY_TO_PRODUCTION == 'Yes' }
             }
             steps {
-                script {
-                    deploy("prod")
-                }
-                echo 'Deploy'
+                // script {
+                //     deploy("prod")
+                // }
+                echo ''
             }
         }
         stage('test-prod') {
@@ -63,14 +65,19 @@ pipeline {
                 expression { params.DEPLOY_TO_PRODUCTION == 'Yes' }
             }
             steps {
-                script {
-                    test("PRD")
-                }
-                echo 'Test'
+                // script {
+                //     test("PRD")
+                // }
+                echo ''
             }
         }
     }
     post {
+        always {
+            script {
+                discordSend description: "Jenkins Pipeline Build - Teodora", footer: "Footer Text", link: env.BUILD_URL, result: currentBuild.currentResult, title: JOB_NAME, webhookURL: "https://discord.com/api/webhooks/1139668547946168561/ZHUF4ww-auCPadJknX44uhBS1utUe0SzBEWXrVmMZVFujKLfMY6a6l7L33fEQd9G-_4p"
+            }
+        }
         failure {
             script {
                 echo "Pipeline failure... Sending notification"
